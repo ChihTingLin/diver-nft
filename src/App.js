@@ -28,6 +28,9 @@ const dateRanges = [
   { label: "6 Months", value: "6m" },
   { label: "1 Year", value: "1y" },
 ];
+const categoryImages = {
+  food: require("./assets/fast-food.png"),
+};
 
 async function fetchBannerData() {
   return fetch(
@@ -81,12 +84,16 @@ function App() {
     fetchBannerData().then((result) => setBanner(result.nft));
     fetchTrendData().then((result) => setTrending(result.nft));
     fetchCategoryData().then((result) => setCategories(result.data));
-    fetchTopCollectionData(activeRange).then((result) => setTopCollection(result.data));
+    fetchTopCollectionData(activeRange).then((result) =>
+      setTopCollection(result.data)
+    );
   }, []);
 
   useEffect(() => {
-    fetchTopCollectionData(activeRange).then((result) => setTopCollection(result.data));
-  }, [activeRange])
+    fetchTopCollectionData(activeRange).then((result) =>
+      setTopCollection(result.data)
+    );
+  }, [activeRange]);
 
   return (
     <div className="App">
@@ -143,8 +150,18 @@ function App() {
               <div className="hero-left__video">Diver market video</div>
             </div>
             <div className="hero-left__buttons">
-              <button className="hero-left__buttons__purple">EXPLORE</button>
-              <button className="hero-left__buttons__black">CREATE</button>
+              <a
+                className="hero-left__buttons__purple"
+                href="https://dev.diver.market/explore"
+              >
+                EXPLORE
+              </a>
+              <a
+                className="hero-left__buttons__black"
+                href="https://dev.diver.market/create_nft"
+              >
+                CREATE
+              </a>
             </div>
           </div>
           <div className="hero-right">
@@ -226,7 +243,7 @@ function App() {
                   <div className="category-card" key={category.name}>
                     <img
                       className="category-card__img"
-                      src={require("./assets/category1.png")}
+                      src={categoryImages[category.name] || ""}
                     />
                     <div className="category-card__name">{category.name}</div>
                   </div>
@@ -258,7 +275,9 @@ function App() {
                   <div
                     key={range.value}
                     onClick={() => setActiveRange(range)}
-                    className={range.value === activeRange.value ? "active" : ""}
+                    className={
+                      range.value === activeRange.value ? "active" : ""
+                    }
                   >
                     {range.label}
                   </div>
@@ -267,11 +286,14 @@ function App() {
             </div>
             <div className="section-title-underline" />
             <div className="ranking-cards">
-              {topCollection.length > 0 && topCollection
-                .map((collection, i) => (
+              {topCollection.length > 0 &&
+                topCollection.map((collection, i) => (
                   <div className="ranking-card" key={i}>
                     <div className="ranking-card__num">{i + 1}</div>
-                    <div className="ranking-card__avatar" style={{backgroundImage: `url(${collection.icon})`}}/>
+                    <div
+                      className="ranking-card__avatar"
+                      style={{ backgroundImage: `url(${collection.icon})` }}
+                    />
                     <div className="ranking-card__info">
                       <div>
                         <div className="ranking-card__name">

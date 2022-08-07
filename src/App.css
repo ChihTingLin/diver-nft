@@ -128,14 +128,14 @@ input {
   color: var(--white);
 }
 
-.hero-left__buttons button {
+.hero-left__buttons a {
   padding: 12px 0;
-  -webkit-appearance: none;
   border: none;
   color: var(--white);
   width: 120px;
   text-align: center;
   display: inline-block;
+  text-decoration: none;
 }
 
 .hero-left__buttons__purple {
@@ -258,7 +258,8 @@ input {
 }
 
 .category-card__img {
-  width: 100%;
+  width: 60%;
+  margin: 0 auto 10px;
   display: block;
 }
 
@@ -703,6 +704,10 @@ input {
   .ranking-card, .ranking-card:nth-child(3n) {
     width: 100%;
     margin: 10px auto;
+  }
+
+  .ranking-range {
+    right: 10%;
   }
 
   .intro {
