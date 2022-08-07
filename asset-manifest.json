@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.css": "/diver-nft/static/css/main.39e7066f.css",
-    "main.js": "/diver-nft/static/js/main.be9b7f1d.js",
+    "main.css": "/diver-nft/static/css/main.a5f1affc.css",
+    "main.js": "/diver-nft/static/js/main.ec31402c.js",
     "static/js/787.94732058.chunk.js": "/diver-nft/static/js/787.94732058.chunk.js",
     "static/media/bg.png": "/diver-nft/static/media/bg.9f0a98d7f106a751124d.png",
     "static/media/slider-cover-1.png": "/diver-nft/static/media/slider-cover-1.a07bbc5dac69f85351b0.png",
@@ -9,17 +9,18 @@
     "static/media/category1.png": "/diver-nft/static/media/category1.fab4d5f4a549fb9f1bf1.png",
     "static/media/slider-cover-2.png": "/diver-nft/static/media/slider-cover-2.c602fa9d65059eff287d.png",
     "static/media/deco.png": "/diver-nft/static/media/deco.3e743af9b5312fb65e5c.png",
+    "static/media/fast-food.png": "/diver-nft/static/media/fast-food.026638385a45c245f324.png",
     "static/media/slick.svg": "/diver-nft/static/media/slick.2630a3e3eab21c607e21.svg",
     "static/media/slick.eot": "/diver-nft/static/media/slick.a4e97f5a2a64f0ab1323.eot",
     "static/media/slick.ttf": "/diver-nft/static/media/slick.c94f7671dcc99dce43e2.ttf",
     "static/media/slick.woff": "/diver-nft/static/media/slick.295183786cd8a1389865.woff",
     "index.html": "/diver-nft/index.html",
-    "main.39e7066f.css.map": "/diver-nft/static/css/main.39e7066f.css.map",
-    "main.be9b7f1d.js.map": "/diver-nft/static/js/main.be9b7f1d.js.map",
+    "main.a5f1affc.css.map": "/diver-nft/static/css/main.a5f1affc.css.map",
+    "main.ec31402c.js.map": "/diver-nft/static/js/main.ec31402c.js.map",
     "787.94732058.chunk.js.map": "/diver-nft/static/js/787.94732058.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.39e7066f.css",
-    "static/js/main.be9b7f1d.js"
+    "static/css/main.a5f1affc.css",
+    "static/js/main.ec31402c.js"
   ]
 }
