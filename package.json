@@ -2,7 +2,8 @@
   "name": "diver-nft",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://ChihTingLin.github.io/diver-nft",
+  "homepage": "https://chihtinglin.github.io/diver-nft",
+  "proxy": "https://4iycc146g1.execute-api.ap-northeast-1.amazonaws.com/",
   "dependencies": {
     "@testing-library/jest-dom": "^5.16.4",
     "@testing-library/react": "^13.3.0",

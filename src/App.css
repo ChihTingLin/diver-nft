@@ -165,10 +165,10 @@ input {
   border-radius: 8px;
   background-color: #fff;
   overflow: hidden;
-}
-
-.slider-card__img img {
-  width: 100%;
+  width: 180px;
+  height: 180px;
+  background-size: cover;
+  background-position: center;
 }
 
 .slider-card__bottom {
@@ -185,10 +185,9 @@ input {
   border-radius: 50%;
   background-color: var(--purple1);
   overflow: hidden;
-}
-
-.slider-card__avatar img {
-  width: 50px;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
 }
 
 .slider-card__author {
@@ -214,6 +213,7 @@ input {
   width: 80%;
   max-width: 1920px;
   margin: auto;
+  position: relative;
 }
 
 .section-title {
@@ -222,13 +222,13 @@ input {
   font-size: 20px;
 }
 
-.section-title > .highlight {
+.section-title .highlight {
   color: var(--purple4);
   margin-left: 8px;
   cursor: pointer;
 }
 
-.section-title > .highlight::after {
+.section-title .highlight::after {
   content: "▼";
   font-size: 12px;
   margin-left: 8px;
@@ -268,6 +268,30 @@ input {
   background-color: var(--white);
   text-align: center;
   padding: 12px 0;
+}
+
+.ranking-range {
+  position: absolute;
+  left: 140px;
+  background-color: var(--grey);
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.ranking-range--hidden {
+  display: none;
+}
+
+.ranking-range div {
+  padding: 10px;
+}
+
+.ranking-range div.active {
+  background-color: var(--purple5);
+}
+
+.ranking-range div:hover {
+  background-color: var(--purple5);
 }
 
 .ranking-cards {
@@ -550,8 +574,8 @@ input {
   }
 
   .ranking-card__avatar {
-    width: 50%;
-    height: 50%;
+    width: 50px;
+    height: 50px;
   }
 
   .footer-container {

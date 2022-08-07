@@ -1,22 +1,93 @@
+import { useState, useEffect } from "react";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import "./App.css";
-import { useState } from "react";
-import { Overlay } from "react-overlays";
+
+// const corsPrefix = "https://cors-anywhere.herokuapp.com/";
+const corsPrefix = "";
+const headers = {
+  "content-type": "application/json",
+  Authorization: `jwt eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJrZXkiOiJ2YWx1ZSJ9.6OyHqTx6JmIr4UyBnZh1nhCYGrrTmP5YNMO8DRW2Uxk`,
+};
+const settings = {
+  dots: true,
+  infinite: false,
+  speed: 500,
+  slidesToShow: window.screen.width < 1000 ? 1 : 3,
+  slidesToScroll: 1,
+  centerMode: true,
+  arrows: false,
+  autoplay: false,
+};
+const dateRanges = [
+  { label: "1 Day", value: "1d" },
+  { label: "7 Days", value: "7d" },
+  { label: "30 Days", value: "30d" },
+  { label: "90 Days", value: "90d" },
+  { label: "6 Months", value: "6m" },
+  { label: "1 Year", value: "1y" },
+];
+
+async function fetchBannerData() {
+  return fetch(
+    `${corsPrefix}https://4iycc146g1.execute-api.ap-northeast-1.amazonaws.com/dev/home/bannernfts`,
+    {
+      method: "GET",
+      headers,
+    }
+  ).then((res) => res.json());
+}
+
+async function fetchTrendData() {
+  return fetch(
+    `${corsPrefix}https://4iycc146g1.execute-api.ap-northeast-1.amazonaws.com/dev/home/trendingnfts`,
+    {
+      method: "GET",
+      headers,
+    }
+  ).then((res) => res.json());
+}
+
+async function fetchCategoryData() {
+  return fetch(
+    `${corsPrefix}https://4iycc146g1.execute-api.ap-northeast-1.amazonaws.com/dev/home/popularcategories`,
+    {
+      method: "GET",
+      headers,
+    }
+  ).then((res) => res.json());
+}
+
+async function fetchTopCollectionData(range) {
+  return fetch(
+    `${corsPrefix}https://4iycc146g1.execute-api.ap-northeast-1.amazonaws.com/dev/home/topcollection?range=${range}`,
+    {
+      method: "GET",
+      headers,
+    }
+  ).then((res) => res.json());
+}
 
 function App() {
-  const settings = {
-    dots: true,
-    infinite: false,
-    speed: 500,
-    slidesToShow: window.screen.width < 1000 ? 1 : 3,
-    slidesToScroll: 1,
-    centerMode: true,
-    arrows: false,
-    autoplay: false,
-  };
   const [menuOpen, setMenuOpen] = useState(false);
+  const [banner, setBanner] = useState([]);
+  const [trending, setTrending] = useState([]);
+  const [categories, setCategories] = useState([]);
+  const [topCollection, setTopCollection] = useState([]);
+  const [isRangeOpen, setIsRangeOpen] = useState(false);
+  const [activeRange, setActiveRange] = useState(dateRanges[1]);
+  useEffect(() => {
+    fetchBannerData().then((result) => setBanner(result.nft));
+    fetchTrendData().then((result) => setTrending(result.nft));
+    fetchCategoryData().then((result) => setCategories(result.data));
+    fetchTopCollectionData(activeRange).then((result) => setTopCollection(result.data));
+  }, []);
+
+  useEffect(() => {
+    fetchTopCollectionData(activeRange).then((result) => setTopCollection(result.data));
+  }, [activeRange])
+
   return (
     <div className="App">
       <header className="header">
@@ -77,28 +148,32 @@ function App() {
             </div>
           </div>
           <div className="hero-right">
-            <Slider {...settings}>
-              {Array(6)
-                .fill(" ")
-                .map((n, i) => (
+            {banner.length > 0 && (
+              <Slider {...settings}>
+                {banner.map((nft, i) => (
                   <div className="slider-card" key={i}>
-                    <div className="slider-card__img">
-                      <img src={require("./assets/slider-cover-1.png")} />
-                    </div>
+                    <div
+                      className="slider-card__img"
+                      style={{ backgroundImage: `url(${nft.image})` }}
+                    />
                     <div className="slider-card__bottom">
-                      <div className="slider-card__avatar">
-                        <img src={require("./assets/slider-avatar-1.png")} />
-                      </div>
+                      <div
+                        className="slider-card__avatar"
+                        style={{
+                          backgroundImage: `url(${nft.metadata.image})`,
+                        }}
+                      />
                       <div className="slider-card__author">
-                        Peripheral illusion
+                        {nft.metadata.collectionName}
                       </div>
                       <div className="slider-card__title">
-                        World of Women Collabs
+                        {nft.metadata.description}
                       </div>
                     </div>
                   </div>
                 ))}
-            </Slider>
+              </Slider>
+            )}
           </div>
         </div>
         <div className="trend section section--lighter">
@@ -107,34 +182,38 @@ function App() {
             <div className="section-title-underline" />
           </div>
           <div className="trend-slider">
-            <Slider
-              {...settings}
-              infinite={true}
-              dots={false}
-              slidesToShow={window.screen.width < 768 ? 1 : 3}
-              autoplay={true}
-            >
-              {Array(6)
-                .fill(" ")
-                .map((n, i) => (
+            {trending.length > 0 && (
+              <Slider
+                {...settings}
+                infinite={true}
+                dots={false}
+                slidesToShow={window.screen.width < 768 ? 1 : 5}
+                autoplay={true}
+              >
+                {trending.map((nft, i) => (
                   <div className="slider-card" key={i}>
-                    <div className="slider-card__img">
-                      <img src={require("./assets/slider-cover-1.png")} />
-                    </div>
+                    <div
+                      className="slider-card__img"
+                      style={{ backgroundImage: `url(${nft.image})` }}
+                    />
                     <div className="slider-card__bottom">
-                      <div className="slider-card__avatar">
-                        <img src={require("./assets/slider-avatar-1.png")} />
-                      </div>
+                      <div
+                        className="slider-card__avatar"
+                        style={{
+                          backgroundImage: `url(${nft.metadata.image})`,
+                        }}
+                      />
                       <div className="slider-card__author">
-                        Peripheral illusion
+                        {nft.metadata.collectionName}
                       </div>
                       <div className="slider-card__title">
-                        World of Women Collabs
+                        {nft.metadata.description}
                       </div>
                     </div>
                   </div>
                 ))}
-            </Slider>
+              </Slider>
+            )}
           </div>
         </div>
         <div className="section">
@@ -142,42 +221,66 @@ function App() {
             <div className="section-title">Popular Categories</div>
             <div className="section-title-underline" />
             <div className="categories">
-              {Array(8)
-                .fill("")
-                .map((n, i) => (
-                  <div className="category-card">
+              {categories.length > 0 &&
+                categories.map((category, i) => (
+                  <div className="category-card" key={category.name}>
                     <img
                       className="category-card__img"
                       src={require("./assets/category1.png")}
                     />
-                    <div className="category-card__name">Category {i + 1}</div>
+                    <div className="category-card__name">{category.name}</div>
                   </div>
                 ))}
             </div>
           </div>
         </div>
-        <div className="ranking section">
+        <div
+          className="ranking section"
+          onClick={() => isRangeOpen && setIsRangeOpen(false)}
+        >
           <div className="section-content">
             <div className="section-title">
-              Top Collections <span className="highlight">7 Days</span>
+              <div>
+                Top Collections{" "}
+                <span
+                  className="highlight"
+                  onClick={() => setIsRangeOpen(!isRangeOpen)}
+                >
+                  {activeRange.label}
+                </span>
+              </div>
+              <div
+                className={
+                  isRangeOpen ? "ranking-range" : "ranking-range--hidden"
+                }
+              >
+                {dateRanges.map((range) => (
+                  <div
+                    key={range.value}
+                    onClick={() => setActiveRange(range)}
+                    className={range.value === activeRange.value ? "active" : ""}
+                  >
+                    {range.label}
+                  </div>
+                ))}
+              </div>
             </div>
             <div className="section-title-underline" />
             <div className="ranking-cards">
-              {Array(9)
-                .fill("")
-                .map((n, i) => (
+              {topCollection.length > 0 && topCollection
+                .map((collection, i) => (
                   <div className="ranking-card" key={i}>
                     <div className="ranking-card__num">{i + 1}</div>
-                    <div className="ranking-card__avatar"></div>
+                    <div className="ranking-card__avatar" style={{backgroundImage: `url(${collection.icon})`}}/>
                     <div className="ranking-card__info">
                       <div>
                         <div className="ranking-card__name">
-                          Collection Name
+                          {collection.name}
                         </div>
                         <div className="ranking-card__price">Price</div>
                       </div>
                       <div className="ranking-card__profit">
-                        <div className="positive">+100.5%</div>
+                        <div className="positive">{collection.amount}</div>
                         <div>Amount</div>
                       </div>
                     </div>
